@@ -22,6 +22,7 @@ npm run validate
 - `sample-selfid.json` - Realistic sample for developers
 - `types.d.ts` - TypeScript definitions
 - `validate.js` - Pure JavaScript validation utilities
+- `reports/Self-ID-Protocol-Comprehensive-Analysis.html` - Detailed analysis report
 
 ## 🚀 Usage
 
@@ -72,3 +73,7 @@ if (result.valid) {
 - ISO 27001 aligned
 - Cross-border data protection
 - User-controlled data retention
+
+## 📊 Analysis Report
+
+A comprehensive technical analysis and evaluation report is available in `reports/Self-ID-Protocol-Comprehensive-Analysis.html`.
