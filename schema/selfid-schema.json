@@ -1,0 +1,349 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://selfid.org/schema/v1.0.0",
+  "title": "Self-ID Protocol Schema",
+  "description": "International-ready identity schema with legal compliance and verifiable claims",
+  "type": "object",
+  "required": ["type", "version", "entity", "network"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "SELF-ID-PACKAGE"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^SNP-\\d+\\.\\d+$"
+    },
+    "entity": {
+      "$ref": "#/definitions/Entity"
+    },
+    "network": {
+      "$ref": "#/definitions/Network"
+    }
+  },
+  "definitions": {
+    "Entity": {
+      "type": "object",
+      "required": ["id", "assuranceLevel", "jurisdiction", "name", "identifiers", "legal", "meta"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^did:selfid:sha256:[a-f0-9]{64}$",
+          "description": "Decentralized Identifier using Self-ID method"
+        },
+        "assuranceLevel": {
+          "type": "string",
+          "enum": ["self-asserted", "verified", "certified"],
+          "description": "Identity assurance level per ISO/IEC 29115"
+        },
+        "jurisdiction": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2 country code"
+        },
+        "name": {
+          "$ref": "#/definitions/Name"
+        },
+        "identifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "minItems": 1
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Skill"
+          }
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Claim"
+          }
+        },
+        "legal": {
+          "$ref": "#/definitions/Legal"
+        },
+        "meta": {
+          "$ref": "#/definitions/Metadata"
+        }
+      }
+    },
+    "Name": {
+      "type": "object",
+      "required": ["full"],
+      "properties": {
+        "full": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "Identifier": {
+      "type": "object",
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["email", "phone", "url", "github", "linkedin", "twitter", "matrix", "other"]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "verified": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "Role": {
+      "type": "object",
+      "required": ["title", "org"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "org": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "from": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}$"
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          }
+        },
+        "evidenceRef": {
+          "type": "string",
+          "pattern": "^hash:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "Skill": {
+      "type": "object",
+      "required": ["name", "level"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "framework": {
+          "type": "string",
+          "description": "Skill framework reference (e.g., EU-eCF, Dreyfus model)"
+        }
+      }
+    },
+    "Claim": {
+      "type": "object",
+      "required": ["type", "value", "issuer", "status"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["EMPLOYMENT", "EDUCATION", "CERTIFICATION", "AWARD", "MEMBERSHIP", "OTHER"]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "issuer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "status": {
+          "type": "string",
+          "enum": ["self-asserted", "verified", "certified", "revoked"]
+        }
+      }
+    },
+    "Legal": {
+      "type": "object",
+      "required": ["jurisdiction", "consentVersion", "termsAcceptedAt", "dataController"],
+      "properties": {
+        "jurisdiction": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2 country code"
+        },
+        "consentVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$"
+        },
+        "termsAcceptedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataController": {
+          "type": "string",
+          "enum": ["self", "org", "third-party"]
+        },
+        "retentionPolicy": {
+          "type": "string",
+          "enum": ["user-controlled", "time-limited", "permanent"],
+          "default": "user-controlled"
+        }
+      }
+    },
+    "Metadata": {
+      "type": "object",
+      "required": ["createdAt", "updatedAt", "version"],
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "Network": {
+      "type": "object",
+      "required": ["trustScore"],
+      "properties": {
+        "trustScore": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Trust score based on verified claims and validations"
+        },
+        "validators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Validator"
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "auditTrail": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AuditEntry"
+          }
+        }
+      }
+    },
+    "Validator": {
+      "type": "object",
+      "required": ["id", "type", "assertion", "timestamp"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "type": {
+          "type": "string",
+          "enum": ["ORG", "GOV", "EDU", "CERT", "PERSON"]
+        },
+        "jurisdiction": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "assertion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "subjectRef": {
+          "type": "string",
+          "description": "Reference to entity field being validated"
+        },
+        "evidenceHash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "assuranceLevel": {
+          "type": "string",
+          "enum": ["verified", "certified"]
+        }
+      }
+    },
+    "Link": {
+      "type": "object",
+      "required": ["type", "ref"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["CIRCLE", "ORG", "COLLEAGUE", "CLIENT", "PARTNER", "OTHER"]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "ref": {
+          "type": "string",
+          "pattern": "^did:selfid:sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "AuditEntry": {
+      "type": "object",
+      "required": ["action", "timestamp"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["CREATED", "UPDATED", "VALIDATED", "REVOKED", "LINKED"]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "by": {
+          "type": "string",
+          "description": "Entity ID that performed the action"
+        }
+      }
+    }
+  }
+}

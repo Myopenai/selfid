@@ -1,0 +1,26 @@
+{
+  "name": "selfid-protocol",
+  "version": "1.0.0",
+  "description": "Self-ID Protocol - International-ready identity schema with legal compliance",
+  "main": "validate.js",
+  "type": "module",
+  "scripts": {
+    "validate": "node validate.js"
+  },
+  "keywords": [
+    "identity",
+    "did",
+    "self-sovereign",
+    "legal-compliance",
+    "international",
+    "verifiable-claims"
+  ],
+  "author": "Self-ID Protocol",
+  "license": "MIT",
+  "files": [
+    "schema/",
+    "sample-selfid.json",
+    "validate.js",
+    "types.d.ts"
+  ]
+}

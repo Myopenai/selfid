@@ -1,0 +1,166 @@
+{
+  "type": "SELF-ID-PACKAGE",
+  "version": "SNP-1.0",
+
+  "entity": {
+    "id": "did:selfid:sha256:9f1c8b3d2e7a4f5c6b9a8d7e5f4c3b2a1d9e8f7c6b5a4d3e2f1c9b8a7d6e5f4c",
+    "assuranceLevel": "self-asserted",
+    "jurisdiction": "NL",
+
+    "name": {
+      "full": "Jane Doe",
+      "display": "Jane Doe"
+    },
+
+    "identifiers": [
+      {
+        "type": "email",
+        "value": "jane@example.com",
+        "verified": false
+      },
+      {
+        "type": "url",
+        "value": "https://jane.dev"
+      },
+      {
+        "type": "github",
+        "value": "janedoe",
+        "verified": true
+      }
+    ],
+
+    "roles": [
+      {
+        "title": "Senior Developer",
+        "org": "Example Corp",
+        "from": "2020-01",
+        "to": "2024-03",
+        "tags": ["javascript", "leadership", "backend"],
+        "evidenceRef": "hash:8f7c6b5a4d3e2f1c9b8a7d6e5f4c3b2a1d9e8f7c6b5a4d3e2f1c9b8a7d6e5f4c"
+      },
+      {
+        "title": "Full Stack Developer",
+        "org": "Tech Startup Inc",
+        "from": "2018-06",
+        "to": "2019-12",
+        "tags": ["react", "nodejs", "mongodb"]
+      }
+    ],
+
+    "skills": [
+      {
+        "name": "JavaScript",
+        "level": 4,
+        "framework": "EU-eCF"
+      },
+      {
+        "name": "System Design",
+        "level": 5
+      },
+      {
+        "name": "React",
+        "level": 4
+      },
+      {
+        "name": "Node.js",
+        "level": 4
+      },
+      {
+        "name": "TypeScript",
+        "level": 3
+      }
+    ],
+
+    "claims": [
+      {
+        "type": "EMPLOYMENT",
+        "value": "Senior Developer at Example Corp",
+        "issuer": "org:example-corp",
+        "status": "verified"
+      },
+      {
+        "type": "EDUCATION",
+        "value": "Bachelor of Computer Science",
+        "issuer": "university:example",
+        "status": "verified"
+      },
+      {
+        "type": "CERTIFICATION",
+        "value": "AWS Solutions Architect",
+        "issuer": "aws:amazon",
+        "status": "certified"
+      }
+    ],
+
+    "legal": {
+      "jurisdiction": "NL",
+      "consentVersion": "1.0",
+      "termsAcceptedAt": "2026-05-02T00:00:00Z",
+      "dataController": "self",
+      "retentionPolicy": "user-controlled"
+    },
+
+    "meta": {
+      "createdAt": "2026-05-02T00:00:00Z",
+      "updatedAt": "2026-05-02T00:00:00Z",
+      "version": 1
+    }
+  },
+
+  "network": {
+    "trustScore": 62,
+
+    "validators": [
+      {
+        "id": "org:example-corp",
+        "type": "ORG",
+        "jurisdiction": "NL",
+        "assertion": "EMPLOYMENT_VERIFIED",
+        "subjectRef": "roles[0]",
+        "evidenceHash": "sha256:8f7c6b5a4d3e2f1c9b8a7d6e5f4c3b2a1d9e8f7c6b5a4d3e2f1c9b8a7d6e5f4c",
+        "timestamp": "2025-11-01T12:00:00Z",
+        "assuranceLevel": "verified"
+      },
+      {
+        "id": "university:example",
+        "type": "EDU",
+        "jurisdiction": "NL",
+        "assertion": "DEGREE_VERIFIED",
+        "subjectRef": "claims[1]",
+        "evidenceHash": "sha256:a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890",
+        "timestamp": "2025-10-15T14:30:00Z",
+        "assuranceLevel": "verified"
+      }
+    ],
+
+    "links": [
+      {
+        "type": "CIRCLE",
+        "label": "KEAN-REGION",
+        "ref": "did:selfid:sha256:7d6e5f4c3b2a1d9e8f7c6b5a4d3e2f1c9b8a7d6e5f4c3b2a1d9e8f7c6b5a4d3e"
+      },
+      {
+        "type": "COLLEAGUE",
+        "label": "John Smith",
+        "ref": "did:selfid:sha256:1c9b8a7d6e5f4c3b2a1d9e8f7c6b5a4d3e2f1c9b8a7d6e5f4c3b2a1d9e8f7c6b5a"
+      }
+    ],
+
+    "auditTrail": [
+      {
+        "action": "CREATED",
+        "timestamp": "2026-05-02T00:00:00Z"
+      },
+      {
+        "action": "VALIDATED",
+        "by": "org:example-corp",
+        "timestamp": "2025-11-01T12:00:00Z"
+      },
+      {
+        "action": "VALIDATED",
+        "by": "university:example",
+        "timestamp": "2025-10-15T14:30:00Z"
+      }
+    ]
+  }
+}
